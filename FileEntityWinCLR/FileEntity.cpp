@@ -233,6 +233,11 @@ vector<char> * FileEntity::GetFileContents()
     return fileContents;
 }
 
+vector<string> * FileEntity::GetFile()
+{
+    return file;
+}
+
 bool FileEntity::FindFile()
 {
     WCharString path;
@@ -411,6 +416,8 @@ bool FileEntity::IsDeleteSuccess()
 
 FileEntity::FileEntity()
 {
+    readPrepared = false;
+    writePrepared = false;
     ifile = nullptr;
     ofile = nullptr;
     fileContents = nullptr;

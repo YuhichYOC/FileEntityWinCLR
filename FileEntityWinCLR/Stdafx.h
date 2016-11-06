@@ -21,3 +21,5 @@
 #pragma comment(lib, "ShlWapi.lib")
 
 using namespace std;
+
+#define FILEENTITY_EXPORTS

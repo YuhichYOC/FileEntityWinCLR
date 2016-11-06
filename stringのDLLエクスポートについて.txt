@@ -1,0 +1,3 @@
+﻿Why do you want to export private members? – Joe McGrath Nov 25 '11 at 5:37
+Remember to use const std::string& as parameters instead of std::string, to avoid unnecessary copying. – Paul Manta Nov 25 '11 at 17:06
+Yeah I know, thanks :-) – TCS Nov 25 '11 at 19:14 
