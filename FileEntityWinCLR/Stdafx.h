@@ -2,7 +2,7 @@
 // 参照回数が多く、かつあまり変更されない、プロジェクト専用のインクルード ファイル
 // を記述します。
 
-#pragma once // ✝
+#pragma once
 
 #include <stdio.h>
 #include <tchar.h>
@@ -17,7 +17,6 @@
 #include <vector>
 
 #include <Shlwapi.h>
-
 #pragma comment(lib, "ShlWapi.lib")
 
 using namespace std;

@@ -27,6 +27,12 @@
     <ClInclude Include="FileEntity.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="WCharString.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectoryEntity.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FileEntityWinCLR.cpp">
@@ -39,6 +45,12 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="FileEntity.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="WCharString.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectoryEntity.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

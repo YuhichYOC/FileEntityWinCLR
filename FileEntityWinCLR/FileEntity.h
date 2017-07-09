@@ -19,78 +19,17 @@
 *
 */
 
+#pragma once
+
 #ifdef FILEENTITY_EXPORTS
 #define FILEENTITY_API __declspec(dllexport)
 #else
 #define FILEENTITY_API __declspec(dllimport)
 #endif // FILEENTITY_EXPORTS
 
-#pragma once
+#include "stdafx.h"
 
-#include "stdafx.h" // ✝
-
-class WCharString
-{
-private:
-
-    string value;
-
-    void Assign(char * arg);
-
-    void Assign(wchar_t * arg);
-
-    void Assign(string arg);
-
-    void Assign(string * arg);
-
-    void Assign(const char * arg);
-
-    void Assign(const wchar_t * arg);
-
-    void Assign(const string * arg);
-
-public:
-
-    FILEENTITY_API WCharString __stdcall Append(char * arg);
-
-    FILEENTITY_API WCharString __stdcall Append(wchar_t * arg);
-
-    FILEENTITY_API WCharString __stdcall Append(string arg);
-
-    FILEENTITY_API WCharString __stdcall Append(string * arg);
-
-    FILEENTITY_API WCharString __stdcall Append(const char * arg);
-
-    FILEENTITY_API WCharString __stdcall Append(const wchar_t * arg);
-
-    FILEENTITY_API WCharString __stdcall Append(const string * arg);
-
-    FILEENTITY_API WCharString __stdcall Value(char * arg);
-
-    FILEENTITY_API WCharString __stdcall Value(wchar_t * arg);
-
-    FILEENTITY_API WCharString __stdcall Value(string arg);
-
-    FILEENTITY_API WCharString __stdcall Value(string * arg);
-
-    FILEENTITY_API WCharString __stdcall Value(const char * arg);
-
-    FILEENTITY_API WCharString __stdcall Value(const wchar_t * arg);
-
-    FILEENTITY_API WCharString __stdcall Value(const string * arg);
-
-    FILEENTITY_API unique_ptr<wchar_t> __stdcall ToWChar();
-
-    FILEENTITY_API string __stdcall ToString();
-
-    FILEENTITY_API bool __stdcall WChar_tStartsWith(wchar_t * arg1eval, string arg2test);
-
-    FILEENTITY_API void __stdcall SysErrWinAPI();
-
-    FILEENTITY_API __stdcall WCharString();
-
-    FILEENTITY_API __stdcall ~WCharString();
-};
+#include "WCharString.h"
 
 class FileEntity
 {
@@ -100,15 +39,15 @@ private:
 
     string fileName;
 
+    int fetchSize;
+
     ifstream * ifile;
 
     ofstream * ofile;
 
     int fileSize;
 
-    vector<char> * fileContents;
-
-    vector<string> * file;
+    vector<char> fileContents;
 
     bool readPrepared;
 
@@ -122,134 +61,65 @@ private:
 
     bool disposed;
 
-public:
+    int EvaluateFetchSize();
 
-    FILEENTITY_API void __stdcall SetDirectory(string arg);
+    int CountFileSize();
 
-    FILEENTITY_API string __stdcall GetDirectory();
+    int OptimizedFetchSize();
 
-    FILEENTITY_API void __stdcall SetFileName(string arg);
+    void Fetch4();
 
-    FILEENTITY_API string __stdcall GetFileName();
+    void Fetch16();
 
-    FILEENTITY_API void __stdcall SetFileContents(vector<char> * arg);
+    void Fetch64();
 
-    FILEENTITY_API void __stdcall SetFileContentsClone(vector<char> * arg);
+    void Fetch256();
 
-    FILEENTITY_API vector<char> * __stdcall GetFileContents();
-
-    FILEENTITY_API vector<string> * __stdcall GetFile();
-
-    FILEENTITY_API bool __stdcall FindFile();
-
-    FILEENTITY_API void __stdcall ReadPrepare();
-
-    FILEENTITY_API void __stdcall ReadPrepareText();
-
-    FILEENTITY_API bool __stdcall IsReadPrepared();
-
-    FILEENTITY_API void __stdcall WritePrepare();
-
-    FILEENTITY_API bool __stdcall IsWritePrepared();
-
-    FILEENTITY_API void __stdcall ReadFile();
-
-    FILEENTITY_API void __stdcall ReadFileText();
-
-    FILEENTITY_API bool __stdcall IsReadSuccess();
-
-    FILEENTITY_API void __stdcall WriteFile();
-
-    FILEENTITY_API bool __stdcall IsWriteSuccess();
-
-    FILEENTITY_API void __stdcall DeleteExistingFile();
-
-    FILEENTITY_API bool __stdcall IsDeleteSuccess();
-
-    FILEENTITY_API __stdcall FileEntity();
-
-    FILEENTITY_API void __stdcall Dispose();
-
-    FILEENTITY_API __stdcall ~FileEntity();
-};
-
-class DirectoryEntity
-{
-private:
-
-    string directoryName;
-
-    string fullPath;
-
-    vector<DirectoryEntity *> * subDirectories;
-
-    vector<FileEntity *> * files;
-
-    bool rootDirectoryFound;
-
-    bool createSuccess;
-
-    bool deleteSuccess;
-
-    string dirCopyTo;
-
-    bool useCopyRollback;
-
-    bool copySuccess;
-
-    bool disposed;
-
-    DirectoryEntity * Describe(LPWIN32_FIND_DATA fileInfo, string parentPath);
-
-    void DirCopy(DirectoryEntity * arg1subDir, string arg2path);
+    void Fetch1024();
 
 public:
 
-    FILEENTITY_API void __stdcall SetDirectory(string arg);
+    FILEENTITY_API void SetDirectory(string arg);
 
-    FILEENTITY_API string __stdcall GetDirectoryName();
+    FILEENTITY_API string GetDirectory();
 
-    FILEENTITY_API string __stdcall GetFullPath();
+    FILEENTITY_API void SetFileName(string arg);
 
-    FILEENTITY_API bool __stdcall RootDirectoryFound();
+    FILEENTITY_API string GetFileName();
 
-    FILEENTITY_API void __stdcall Describe();
+    FILEENTITY_API void SetFetchSize(int arg);
 
-    FILEENTITY_API void __stdcall CreateRootDirectory(string arg);
+    FILEENTITY_API int GetFetchSize();
 
-    FILEENTITY_API void __stdcall SetDirectories(vector<DirectoryEntity *> * arg);
+    FILEENTITY_API void SetFileContents(vector<char> arg);
 
-    FILEENTITY_API vector<DirectoryEntity *> * __stdcall GetDirectories();
+    FILEENTITY_API vector<char> GetFileContents();
 
-    FILEENTITY_API void __stdcall AddDirectory(DirectoryEntity * arg);
+    FILEENTITY_API bool IsReadPrepared();
 
-    FILEENTITY_API void __stdcall SetFiles(vector<FileEntity *> * arg);
+    FILEENTITY_API bool IsWritePrepared();
 
-    FILEENTITY_API vector<FileEntity *> * __stdcall GetFiles();
+    FILEENTITY_API bool IsReadSuccess();
 
-    FILEENTITY_API void __stdcall AddFile(FileEntity * arg);
+    FILEENTITY_API bool IsWriteSuccess();
 
-    FILEENTITY_API bool __stdcall IsCreateSuccess();
+    FILEENTITY_API bool IsDeleteSuccess();
 
-    FILEENTITY_API bool __stdcall IsDeleteSuccess();
+    FILEENTITY_API void ReadPrepare();
 
-    FILEENTITY_API void __stdcall CreateDir();
+    FILEENTITY_API void WritePrepare();
 
-    FILEENTITY_API void __stdcall CreateDir(string arg);
+    FILEENTITY_API void ReadFile();
 
-    FILEENTITY_API bool __stdcall FindDir();
+    FILEENTITY_API void WriteFile();
 
-    FILEENTITY_API bool __stdcall FindDir(string arg);
+    FILEENTITY_API bool FindFile();
 
-    FILEENTITY_API void __stdcall DeleteExistingDir();
+    FILEENTITY_API void DeleteExistingFile();
 
-    FILEENTITY_API void __stdcall DeleteExistingDir(string arg);
+    FILEENTITY_API FileEntity();
 
-    FILEENTITY_API void __stdcall DirCopy(string arg, bool rollback);
+    FILEENTITY_API void Dispose();
 
-    FILEENTITY_API __stdcall DirectoryEntity();
-
-    FILEENTITY_API void __stdcall Dispose();
-
-    FILEENTITY_API __stdcall ~DirectoryEntity();
+    FILEENTITY_API ~FileEntity();
 };
